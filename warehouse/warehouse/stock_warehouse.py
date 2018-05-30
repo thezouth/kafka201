@@ -1,7 +1,7 @@
 from .stock import StockItem
 
-STOCK_WAREHOUSE = [
-    { item.product_id : item }
+STOCK_WAREHOUSE = {
+    item.product_id : item 
     for item in [
         StockItem(1, 'Butter', 20),
         StockItem(2, 'Milk', 100),
@@ -10,4 +10,4 @@ STOCK_WAREHOUSE = [
         StockItem(5, 'Milke Chocolate', 54),
         StockItem(6, 'Baking Soda', 43)
     ]
-]
+}
