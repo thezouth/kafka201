@@ -1,7 +1,0 @@
-{
-    "id": 2,
-    "customer": { "id": 2 },
-    "items": [
-        { "product_id": 6, "amount": 45 }
-    ]
-}
