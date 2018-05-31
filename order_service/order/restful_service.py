@@ -3,15 +3,19 @@ from sanic.request import Request
 from typing import Dict
 
 from . import persistence
-from .model import Order, OrderItem
+from .model import Order, OrderItem, serialize_order
 
 app = Sanic()
 
 @app.post('order')
 def create_order(request: Request):
-    order = build_order(request.json)
-    order_id = persistence.create_order(order)
-    return response.json({ "order_id": order_id })
+    #Deserialize message
+    req_order = build_order(request.json)
+    #Execute main flow
+    res_order = persistence.create_order(req_order)
+    
+    #Response
+    return response.json(serialize_order(res_order))
 
 def build_order(json: Dict) -> Order:
     items = [OrderItem(**item) for item in json['items']]

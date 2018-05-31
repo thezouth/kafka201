@@ -1,2 +1,5 @@
 sanic==0.7.0
+aiohttp
+attr
+
 pytest

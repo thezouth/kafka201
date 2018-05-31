@@ -2,6 +2,7 @@ import unittest
 
 import sqlite3
 from typing import Tuple
+from datetime import datetime
 
 from ..order.persistence import create_order
 from ..order import db
@@ -24,7 +25,8 @@ class TestPersistence(unittest.TestCase):
             ]
         )
 
-        order_id = create_order(order, self.conn)
+        new_order = create_order(order, self.conn)
+        order_id = new_order.order_id
 
         actual_order, actual_items = self._load_order(order_id)
         self.assert_order(order, actual_order)
@@ -34,7 +36,7 @@ class TestPersistence(unittest.TestCase):
 
     def _load_order(self, order_id):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT customer_id, customer_name, is_member FROM orders WHERE id = ?', 
+        cursor.execute('SELECT customer_id, customer_name, is_member, date FROM orders WHERE id = ?', 
             (order_id,))
         order = cursor.fetchone()
 
@@ -48,6 +50,7 @@ class TestPersistence(unittest.TestCase):
         assert db_actual[0] == expected.customer_id
         assert db_actual[1] == expected.customer_name
         assert db_actual[2] == expected.is_member
+        assert datetime.strptime(db_actual[3], '%Y-%m-%d %H:%M:%S.%f') == expected.date
     
     def assert_order_item(self, expected: OrderItem, db_actual: Tuple):
         assert db_actual[0] == expected.product_id
