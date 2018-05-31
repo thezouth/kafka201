@@ -3,6 +3,6 @@
     "customer_name": "Tansinee",
     "is_member": true,
     "items": [
-        { "product_id": 6, "amount": 45, "price_per_unit": 20.0 }
+        { "product_id": 6, "amount": 4, "price_per_unit": 20.0 }
     ]
 }

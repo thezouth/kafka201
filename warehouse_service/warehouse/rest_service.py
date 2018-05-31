@@ -13,4 +13,4 @@ async def create_delivery_order(request: Request):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    app.run()
+    app.run(port=8001)

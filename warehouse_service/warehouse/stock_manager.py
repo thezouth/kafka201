@@ -19,11 +19,11 @@ def create_delivery_order(order):
     for item in order['items']:
         _deduct_stock(item)
 
-    logger.info("\033[94mCreate delivery order: %s\033[0m", order['id'])
+    logger.info("\033[94mCreate delivery order: %s\033[0m", order['order_id'])
     DELIVERY_ORDERS.append(order)
 
 def pending_order(order):
-    logger.info("\033[91mPending order: %s\033[0m", order['id'])
+    logger.info("\033[91mPending order: %s\033[0m", order['order_id'])
     PENDING_ORDERS.append(order)
 
 def _check_remainning_stock(order) -> bool:
