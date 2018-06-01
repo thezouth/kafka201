@@ -4,9 +4,9 @@ import sqlite3
 from typing import Tuple
 from datetime import datetime
 
-from ..order.persistence import create_order
-from ..order import db
-from ..order.model import Order, OrderItem
+from order_service.order.persistence import create_order
+from order_service.order import db
+from order_service.order.model import Order, OrderItem
 
 class TestPersistence(unittest.TestCase):
     @classmethod

@@ -1,3 +1,5 @@
+from typing import Optional
+from datetime import datetime
 from sqlite3 import Connection, Cursor
 
 from .db import conn
@@ -15,6 +17,21 @@ def create_order(order: Order, conn: Connection = conn) -> Order:
 
     conn.commit()
     return new_order
+
+
+def accumulate_sales(customer_id: int, year: Optional[int] = None, conn: Connection = conn) -> int:
+    cursor = conn.cursor()
+    year = datetime.now().year if year is None else year
+
+    cursor.execute('''
+        SELECT amount, price_per_unit
+        FROM orders INNER JOIN order_items ON orders.id = order_items.order_id
+        WHERE strftime('%Y', orders.date) = ? AND orders.customer_id = ?
+    ''', (str(year), customer_id))
+    
+    result = cursor.fetchall()
+    print(result)
+    return sum([amount * price for amount, price in result])
     
 
 def _create_order(order: Order, cursor: Cursor) -> Order:
