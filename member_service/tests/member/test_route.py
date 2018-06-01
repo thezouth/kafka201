@@ -6,6 +6,12 @@ def test_index():
     _, res = app.test_client.get('/')
     assert res.json.get('name') == 'member service'
 
+def test_notify():
+    data = {'message': 'message to user'}
+    _, res = app.test_client.post('/member/admin-id/notify', data=json.dumps(data))
+    assert res.status == 202
+    assert res.json.get('status') == 'success'
+
 def test_promote():
     data = {'privilege': 'silver'}
     _, res = app.test_client.post('/member/admin-id/promote', data=json.dumps(data))

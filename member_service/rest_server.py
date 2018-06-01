@@ -13,6 +13,29 @@ async def home(request):
     return response.json({'name': 'member service', 'version': '0.1', 'status': 'ok'})
 
 
+@app.get('/member/<member_id>')
+async def get_member(request, member_id):
+    try:
+        data = member.get(member_id)
+    except member.MemberNotFoundException:
+        abort(404)
+
+    return response.json(data)
+
+
+@app.post('/member/<member_id>/notify')
+async def promote(request, member_id):
+    try:
+        message = request.json['message']
+        member.notify(member_id, message)
+    except member.MemberNotFoundException:
+        abort(404)
+
+    return response.json(
+            {'status': 'success'},
+            status=202)
+
+
 @app.post('/member/<member_id>/promote')
 async def promote(request, member_id):
     try:
@@ -20,20 +43,9 @@ async def promote(request, member_id):
         member.promote(member_id, privilege)
     except member.MemberNotFoundException:
         abort(404)
-    
+
     return response.json({'status': 'success'})
 
-
-@app.get('/member/<member_id>')
-async def get_member(request, member_id):
-    try:
-        data = member.get(member_id)        
-    except member.MemberNotFoundException:
-        abort(404)
-
-    return response.json(data)
-
-    
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
