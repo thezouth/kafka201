@@ -21,14 +21,17 @@ async def create_order(request: Request):
     #Response
     return response.json(serialize_order(res_order))
 
+
 def build_order(json: Dict) -> Order:
     items = [OrderItem(**item) for item in json['items']]
     del json['items']
     return Order(items=items, **json)
 
+
 @app.listener('after_server_start')
 async def start_proxy_session(app, loop):
     await warehouse.start(loop)
+
 
 @app.listener('after_server_stop')
 async def stop_proxy_session(app, loop):
