@@ -16,6 +16,6 @@ async def stop():
 
 
 async def promote(member_id, privilege):
-    async with SESSION.post(f'{SERVICE_HOST}/member/{member_id}/promote', 
-            json=json.dumps({'privilege': privilege})) as resp:
+    async with SESSION.post(f'{SERVICE_HOST}member/{member_id}/promote', 
+            json={'privilege': privilege}) as resp:
         resp.raise_for_status()

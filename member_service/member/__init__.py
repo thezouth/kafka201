@@ -1,11 +1,21 @@
 from member.model.member import Member, NotificationChannel
 import logging
 
-admin = Member('admin-name', 'admin-priv',
+members = {
+    member.id: member
+    for member in [
+        Member('admin-name', 'admin-priv',
         email='admin@webscal3r.club',
         notification_channel=NotificationChannel.EMAIL,
-        id='admin-id')
-members = {admin.id: admin}
+        id='admin-id'),
+        Member('YiM', 'silver', email='abc@xyz.com',
+        NotificationChannel=NotificationChannel.EMAIL,
+        id='1'),
+        Member('Roong', 'silver', line_account='roongroong',
+        NotificationChannel=NotificationChannel.LINE,
+        id='2'),
+    ]
+}
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +38,7 @@ def notify(member_id, message):
 
 
 def promote(member_id, privilege):
+    print('member', member_id, type(member_id))
     member = get(member_id)
     logger.info(f'Change member [{member_id}] privilege from "{member.privilege}" to "{privilege}"')
     member.privilege = privilege

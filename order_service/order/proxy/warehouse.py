@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 async def start(loop=None):
     global SESSION
     SESSION = aiohttp.ClientSession(loop=loop)
-    print('Proxy started!', SESSION)
 
 async def stop():
     await SESSION.close()

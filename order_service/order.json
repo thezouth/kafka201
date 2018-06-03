@@ -1,8 +1,8 @@
 {
     "customer_id": 2,
-    "customer_name": "Tansinee",
+    "customer_name": "YiM",
     "is_member": true,
     "items": [
-        { "product_id": 6, "amount": 4, "price_per_unit": 20.0 }
+        { "product_id": 1, "amount": 2, "price_per_unit": 800.0 }
     ]
 }
