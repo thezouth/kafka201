@@ -18,9 +18,12 @@ async def create_order(request: Request):
     res_order = persistence.create_order(req_order)
     
     #Execute side orders
-    await warehouse.send_order(res_order)
-    await maybe_promote_member(res_order)
-
+    await asyncio.gather(
+        warehouse.send_order(res_order),
+        notify_customer(res_order),
+        maybe_promote_member(res_order),
+    )
+    
     #Response
     return response.json(serialize_order(res_order))
 
@@ -38,10 +41,16 @@ async def maybe_promote_member(order: Order):
 
     current_sales = sum((item.amount * item.price_per_unit for item in order.items))
     acc_sales = persistence.accumulate_sales(order.customer_id)
-    print(acc_sales, current_sales)
     if acc_sales >= GOLD_MEMBER_SALES and (acc_sales - current_sales) < GOLD_MEMBER_SALES:
         print('promote member', order.customer_id)
         await member.promote(order.customer_id, 'GOLD')
+
+async def notify_customer(order: Order):
+    if not order.is_member:
+        return
+
+    message = f'We received your order, Please find at http://me.thezouth.com/order/{order.order_id}'
+    await member.notify(order.customer_id, message)
 
 
 @app.listener('after_server_start')

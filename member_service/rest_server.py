@@ -24,7 +24,7 @@ async def get_member(request, member_id):
 
 
 @app.post('/member/<member_id>/notify')
-async def promote(request, member_id):
+async def notify(request, member_id):
     try:
         message = request.json['message']
         member.notify(member_id, message)

@@ -2,7 +2,7 @@ import aiohttp
 import json
 
 
-SERVICE_HOST = 'http://localhost:8002/'
+SERVICE_HOST = 'http://localhost:8002'
 SESSION = None
 
 
@@ -16,6 +16,12 @@ async def stop():
 
 
 async def promote(member_id, privilege):
-    async with SESSION.post(f'{SERVICE_HOST}member/{member_id}/promote', 
+    async with SESSION.post(f'{SERVICE_HOST}/member/{member_id}/promote', 
             json={'privilege': privilege}) as resp:
+        resp.raise_for_status()
+
+
+async def notify(member_id, message):
+    async with SESSION.post(f'{SERVICE_HOST}/member/{member_id}/notify',
+        json={'message': message}) as resp:
         resp.raise_for_status()
