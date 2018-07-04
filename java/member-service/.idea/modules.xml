@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/member-service.iml" filepath="$PROJECT_DIR$/.idea/modules/member-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/member-service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/member-service_main.iml" group="member-service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/member-service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/member-service_test.iml" group="member-service" />
+    </modules>
+  </component>
+</project>
